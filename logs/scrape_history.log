@@ -1,0 +1,90 @@
+2026-04-07 09:03:37,238 [INFO] Run started: mode=metadata
+2026-04-07 09:03:37,243 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:24:05,179 [INFO] Run started: mode=metadata
+2026-04-07 12:24:05,180 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:24:05,752 [INFO] Metadata updated: brent_crude_contracts.csv (11 rows)
+2026-04-07 12:24:05,752 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
+2026-04-07 12:24:05,931 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
+2026-04-07 12:24:05,934 [INFO] Run finished: mode=metadata
+2026-04-07 12:24:17,994 [INFO] Run started: mode=historical
+2026-04-07 12:24:18,671 [INFO] Historical updated: historical\brent_crude\jun26_6018433.csv (515 rows)
+2026-04-07 12:24:18,905 [INFO] Historical updated: historical\brent_crude\jul26_6018430.csv (515 rows)
+2026-04-07 12:24:19,146 [INFO] Historical updated: historical\brent_crude\aug26_6018418.csv (515 rows)
+2026-04-07 12:24:19,385 [INFO] Historical updated: historical\brent_crude\sep26_6018448.csv (515 rows)
+2026-04-07 12:24:19,644 [INFO] Historical updated: historical\brent_crude\oct26_6018445.csv (515 rows)
+2026-04-07 12:24:19,895 [INFO] Historical updated: historical\brent_crude\nov26_6018442.csv (515 rows)
+2026-04-07 12:24:20,137 [INFO] Historical updated: historical\brent_crude\dec26_6018421.csv (515 rows)
+2026-04-07 12:24:20,369 [INFO] Historical updated: historical\brent_crude\jan27_6018427.csv (515 rows)
+2026-04-07 12:24:20,605 [INFO] Historical updated: historical\brent_crude\feb27_6018424.csv (515 rows)
+2026-04-07 12:24:20,836 [INFO] Historical updated: historical\brent_crude\mar27_6018436.csv (515 rows)
+2026-04-07 12:24:21,081 [INFO] Historical updated: historical\brent_crude\apr27_6018416.csv (515 rows)
+2026-04-07 12:24:21,315 [INFO] Historical updated: historical\low_sulphur_gasoil\apr26_6227601.csv (515 rows)
+2026-04-07 12:24:21,549 [INFO] Historical updated: historical\low_sulphur_gasoil\may26_6227602.csv (515 rows)
+2026-04-07 12:24:21,781 [INFO] Historical updated: historical\low_sulphur_gasoil\jun26_6227603.csv (515 rows)
+2026-04-07 12:24:22,016 [INFO] Historical updated: historical\low_sulphur_gasoil\jul26_6227604.csv (515 rows)
+2026-04-07 12:24:22,256 [INFO] Historical updated: historical\low_sulphur_gasoil\aug26_6227605.csv (515 rows)
+2026-04-07 12:24:22,509 [INFO] Historical updated: historical\low_sulphur_gasoil\sep26_6227606.csv (515 rows)
+2026-04-07 12:24:22,766 [INFO] Historical updated: historical\low_sulphur_gasoil\oct26_6227607.csv (515 rows)
+2026-04-07 12:24:23,007 [INFO] Historical updated: historical\low_sulphur_gasoil\nov26_6227608.csv (515 rows)
+2026-04-07 12:24:23,240 [INFO] Historical updated: historical\low_sulphur_gasoil\dec26_6227609.csv (515 rows)
+2026-04-07 12:24:23,477 [INFO] Historical updated: historical\low_sulphur_gasoil\jan27_6540998.csv (515 rows)
+2026-04-07 12:24:23,704 [INFO] Historical updated: historical\low_sulphur_gasoil\feb27_6540999.csv (515 rows)
+2026-04-07 12:24:23,933 [INFO] Historical updated: historical\low_sulphur_gasoil\mar27_6541000.csv (515 rows)
+2026-04-07 12:24:24,153 [INFO] Historical updated: historical\low_sulphur_gasoil\apr27_6541001.csv (515 rows)
+2026-04-07 12:24:24,155 [INFO] Run finished: mode=historical
+2026-04-07 12:24:29,524 [INFO] Run started: mode=all
+2026-04-07 12:24:29,525 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:24:30,062 [INFO] Metadata updated: brent_crude_contracts.csv (11 rows)
+2026-04-07 12:24:30,062 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
+2026-04-07 12:24:30,247 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
+2026-04-07 12:24:30,484 [INFO] Historical updated: historical\brent_crude\jun26_6018433.csv (515 rows)
+2026-04-07 12:24:30,720 [INFO] Historical updated: historical\brent_crude\jul26_6018430.csv (515 rows)
+2026-04-07 12:24:30,957 [INFO] Historical updated: historical\brent_crude\aug26_6018418.csv (515 rows)
+2026-04-07 12:24:31,181 [INFO] Historical updated: historical\brent_crude\sep26_6018448.csv (515 rows)
+2026-04-07 12:24:31,437 [INFO] Historical updated: historical\brent_crude\oct26_6018445.csv (515 rows)
+2026-04-07 12:24:31,757 [INFO] Historical updated: historical\brent_crude\nov26_6018442.csv (515 rows)
+2026-04-07 12:24:32,044 [INFO] Historical updated: historical\brent_crude\dec26_6018421.csv (515 rows)
+2026-04-07 12:24:32,337 [INFO] Historical updated: historical\brent_crude\jan27_6018427.csv (515 rows)
+2026-04-07 12:24:32,645 [INFO] Historical updated: historical\brent_crude\feb27_6018424.csv (515 rows)
+2026-04-07 12:24:32,930 [INFO] Historical updated: historical\brent_crude\mar27_6018436.csv (515 rows)
+2026-04-07 12:24:33,215 [INFO] Historical updated: historical\brent_crude\apr27_6018416.csv (515 rows)
+2026-04-07 12:24:33,462 [INFO] Historical updated: historical\low_sulphur_gasoil\apr26_6227601.csv (515 rows)
+2026-04-07 12:24:33,750 [INFO] Historical updated: historical\low_sulphur_gasoil\may26_6227602.csv (515 rows)
+2026-04-07 12:24:34,022 [INFO] Historical updated: historical\low_sulphur_gasoil\jun26_6227603.csv (515 rows)
+2026-04-07 12:24:34,348 [INFO] Historical updated: historical\low_sulphur_gasoil\jul26_6227604.csv (515 rows)
+2026-04-07 12:24:34,781 [INFO] Historical updated: historical\low_sulphur_gasoil\aug26_6227605.csv (515 rows)
+2026-04-07 12:24:35,049 [INFO] Historical updated: historical\low_sulphur_gasoil\sep26_6227606.csv (515 rows)
+2026-04-07 12:24:35,307 [INFO] Historical updated: historical\low_sulphur_gasoil\oct26_6227607.csv (515 rows)
+2026-04-07 12:24:35,571 [INFO] Historical updated: historical\low_sulphur_gasoil\nov26_6227608.csv (515 rows)
+2026-04-07 12:24:35,846 [INFO] Historical updated: historical\low_sulphur_gasoil\dec26_6227609.csv (515 rows)
+2026-04-07 12:24:36,106 [INFO] Historical updated: historical\low_sulphur_gasoil\jan27_6540998.csv (515 rows)
+2026-04-07 12:24:36,366 [INFO] Historical updated: historical\low_sulphur_gasoil\feb27_6540999.csv (515 rows)
+2026-04-07 12:24:36,612 [INFO] Historical updated: historical\low_sulphur_gasoil\mar27_6541000.csv (515 rows)
+2026-04-07 12:24:36,887 [INFO] Historical updated: historical\low_sulphur_gasoil\apr27_6541001.csv (515 rows)
+2026-04-07 12:24:36,891 [INFO] Run finished: mode=all
+2026-04-07 12:34:59,942 [INFO] Run started: mode=metadata
+2026-04-07 12:34:59,943 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:35:00,853 [INFO] Metadata updated: brent_crude_contracts.csv (11 rows)
+2026-04-07 12:35:00,854 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
+2026-04-07 12:35:01,031 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
+2026-04-07 12:35:01,036 [INFO] Run finished: mode=metadata
+2026-04-07 12:35:05,001 [INFO] Run started: mode=historical
+2026-04-07 12:35:08,278 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=11 | rows=5665
+2026-04-07 12:35:11,479 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=13 | rows=6695
+2026-04-07 12:35:11,485 [INFO] Run finished: mode=historical
+2026-04-07 12:35:31,905 [INFO] Run started: mode=all
+2026-04-07 12:35:31,906 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:35:32,434 [INFO] Metadata updated: brent_crude_contracts.csv (11 rows)
+2026-04-07 12:35:32,435 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
+2026-04-07 12:35:32,609 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
+2026-04-07 12:35:35,031 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=11 | rows=5665
+2026-04-07 12:35:37,767 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=13 | rows=6695
+2026-04-07 12:35:37,769 [INFO] Run finished: mode=all
+2026-04-07 12:40:59,470 [INFO] Run started: mode=all
+2026-04-07 12:40:59,472 [INFO] Fetching contract metadata for Brent Crude Futures
+2026-04-07 12:41:00,074 [INFO] Metadata updated: brent_crude_contracts.csv (11 rows)
+2026-04-07 12:41:00,074 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
+2026-04-07 12:41:00,251 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
+2026-04-07 12:41:02,699 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=11 | rows=5665
+2026-04-07 12:41:05,501 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=13 | rows=6695
+2026-04-07 12:41:05,505 [INFO] Run finished: mode=all

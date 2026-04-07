@@ -1,0 +1,9 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ice-data-tracker"
+version = "0.1.0"
+description = "GitHub Actions scraper for ICE contract metadata and historical market data"
+requires-python = ">=3.11"
