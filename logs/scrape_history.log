@@ -186,3 +186,7 @@
 2026-04-17 03:50:15,701 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
 2026-04-17 03:50:15,752 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (13 rows)
 2026-04-17 03:50:15,753 [INFO] Run finished: mode=metadata
+2026-04-17 03:59:19,574 [INFO] Run started: mode=historical
+2026-04-17 03:59:21,844 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=11 | rows=5753
+2026-04-17 03:59:24,040 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=13 | rows=6795
+2026-04-17 03:59:24,042 [INFO] Run finished: mode=historical
