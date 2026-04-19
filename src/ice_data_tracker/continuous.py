@@ -26,7 +26,6 @@ class ContinuousInstrument:
     roll_rule: str
     splice_last_seed_date: str
     derived_front_month_filename: str
-    derived_continuous_filename: str
 
 
 CONTINUOUS_INSTRUMENTS: tuple[ContinuousInstrument, ...] = (
@@ -39,7 +38,6 @@ CONTINUOUS_INSTRUMENTS: tuple[ContinuousInstrument, ...] = (
         roll_rule='brent',
         splice_last_seed_date='2026-04-06',
         derived_front_month_filename='brent_crude_front_month_ice.csv',
-        derived_continuous_filename='brent_crude_continuous_daily.csv',
     ),
     ContinuousInstrument(
         slug='low_sulphur_gasoil',
@@ -50,7 +48,6 @@ CONTINUOUS_INSTRUMENTS: tuple[ContinuousInstrument, ...] = (
         roll_rule='gasoil',
         splice_last_seed_date='2026-04-06',
         derived_front_month_filename='low_sulphur_gasoil_front_month_ice.csv',
-        derived_continuous_filename='low_sulphur_gasoil_continuous_daily.csv',
     ),
 )
 
@@ -195,7 +192,9 @@ def _load_metadata(metadata_path: Path, instrument: ContinuousInstrument) -> pd.
         raise FileNotFoundError(f'Missing metadata file: {metadata_path}')
     df = _normalize_columns(df)
     df = df[['market_id', 'market_strip']].drop_duplicates().copy()
-    df['last_trading_date'] = df['market_strip'].apply(lambda x: _compute_last_trading_date(str(x), instrument.roll_rule).strftime('%Y-%m-%d'))
+    df['last_trading_date'] = df['market_strip'].apply(
+        lambda x: _compute_last_trading_date(str(x), instrument.roll_rule).strftime('%Y-%m-%d')
+    )
     return df.sort_values(['last_trading_date', 'market_id']).reset_index(drop=True)
 
 
@@ -219,7 +218,10 @@ def _build_ice_front_month_series(instrument: ContinuousInstrument) -> pd.DataFr
     eligible = merged.loc[merged['date_ts'] <= merged['last_trading_date_ts']].copy()
 
     if eligible.empty:
-        return pd.DataFrame(columns=['date', 'settlement_price', 'market_id', 'market_strip', 'last_trading_date', 'instrument_slug', 'instrument_name', 'source', 'series_type', 'roll_rule'])
+        return pd.DataFrame(columns=[
+            'date', 'settlement_price', 'market_id', 'market_strip', 'last_trading_date',
+            'instrument_slug', 'instrument_name', 'source', 'series_type', 'roll_rule'
+        ])
 
     eligible = eligible.sort_values(['date', 'last_trading_date', 'market_id'])
     front = eligible.groupby('date', as_index=False).first()
@@ -228,7 +230,10 @@ def _build_ice_front_month_series(instrument: ContinuousInstrument) -> pd.DataFr
     front['source'] = 'ice_front_month'
     front['series_type'] = 'continuous'
     front['roll_rule'] = instrument.roll_rule
-    front = front[['date', 'settlement_price', 'market_id', 'market_strip', 'last_trading_date', 'instrument_slug', 'instrument_name', 'source', 'series_type', 'roll_rule']]
+    front = front[[
+        'date', 'settlement_price', 'market_id', 'market_strip', 'last_trading_date',
+        'instrument_slug', 'instrument_name', 'source', 'series_type', 'roll_rule'
+    ]]
     return front.sort_values('date').reset_index(drop=True)
 
 
@@ -259,7 +264,6 @@ def build_and_store_continuous_series() -> dict[str, pd.DataFrame]:
         ice_front, continuous = build_continuous_for_instrument(instrument)
 
         write_csv(ice_front, DERIVED_DIR / instrument.derived_front_month_filename)
-        write_csv(continuous, DERIVED_DIR / instrument.derived_continuous_filename)
 
         all_continuous.append(continuous)
         outputs[instrument.slug] = continuous
