@@ -13,6 +13,7 @@ from .client import IceClient
 from .config import (
     DATA_DIR,
     HISTORICAL_DIR,
+    DERIVED_DIR,
     INSTRUMENTS,
     LOG_DIR,
     LOG_FILE,
@@ -24,6 +25,7 @@ from .config import (
     Instrument,
 )
 from .storage import load_json, read_csv_if_exists, save_json, upsert_by_columns, write_csv
+from .continuous import build_and_store_continuous_series
 
 
 def setup_logging() -> None:
@@ -39,7 +41,7 @@ def setup_logging() -> None:
 
 
 def ensure_directories() -> None:
-    for path in (DATA_DIR, METADATA_DIR, HISTORICAL_DIR, STATE_DIR, LOG_DIR):
+    for path in (DATA_DIR, METADATA_DIR, HISTORICAL_DIR, DERIVED_DIR, STATE_DIR, LOG_DIR):
         path.mkdir(parents=True, exist_ok=True)
 
 
@@ -307,6 +309,8 @@ def run_scheduled() -> None:
             metadata_tables = load_or_refresh_metadata(client, now_riga, force_refresh=False)
         historical_success_count = fetch_and_store_historical(client, metadata_tables, now_riga)
         historical_run = historical_success_count > 0
+        if historical_run:
+            build_and_store_continuous_series()
 
     if not metadata_run and not historical_run:
         logging.info("No scheduled scrape due at %s", now_riga.isoformat())
@@ -326,10 +330,16 @@ def run_manual(mode: str) -> None:
 
     if mode == "historical":
         fetch_and_store_historical(client, metadata_tables, now_riga)
+        build_and_store_continuous_series()
         return
 
     if mode == "all":
         fetch_and_store_historical(client, metadata_tables, now_riga)
+        build_and_store_continuous_series()
+        return
+
+    if mode == "build_continuous":
+        build_and_store_continuous_series()
         return
 
     raise ValueError(f"Unsupported mode: {mode}")
@@ -339,7 +349,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="ICE market data tracker")
     parser.add_argument(
         "--mode",
-        choices=["scheduled", "metadata", "historical", "all"],
+        choices=["scheduled", "metadata", "historical", "all", "build_continuous"],
         default="scheduled",
         help="Run the scheduler gate or force a concrete scrape mode.",
     )

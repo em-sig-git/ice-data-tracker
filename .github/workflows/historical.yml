@@ -32,6 +32,9 @@ jobs:
       - name: Run historical scraper
         run: PYTHONPATH=src python -m ice_data_tracker.main --mode historical
 
+      - name: Rebuild derived continuous datasets
+        run: PYTHONPATH=src python -m ice_data_tracker.main --mode build_continuous
+
       - name: Commit and push updates
         run: |
           if git diff --quiet -- data logs; then
@@ -41,5 +44,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data logs
-          git commit -m "Update ICE historical data"
+          git commit -m "Update ICE historical and derived data"
           git push
