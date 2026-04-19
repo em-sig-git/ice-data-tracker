@@ -2,7 +2,7 @@ name: ICE historical scrape
 
 on:
   schedule:
-    - cron: '7 9,21 * * *'
+    - cron: '15 9,21 * * *'
       timezone: 'Europe/Riga'
   workflow_dispatch:
 
