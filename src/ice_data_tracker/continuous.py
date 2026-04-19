@@ -7,6 +7,8 @@ from pathlib import Path
 import holidays
 import pandas as pd
 
+from datetime import datetime, timezone
+
 from .config import DERIVED_DIR, HISTORICAL_DIR, METADATA_DIR, SOURCE_DIR
 from .storage import read_csv_if_exists, write_csv
 
@@ -273,6 +275,9 @@ def build_and_store_continuous_series() -> dict[str, pd.DataFrame]:
         combined = combined.sort_values(['instrument_slug', 'date']).reset_index(drop=True)
     else:
         combined = pd.DataFrame()
+
+    timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    combined['last_update_timestamp'] = timestamp
 
     write_csv(combined, DERIVED_DIR / 'energy_futures_continuous_daily.csv')
     outputs['combined'] = combined

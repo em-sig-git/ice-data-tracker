@@ -1,1 +1,4 @@
-.github/workflows/*.yml text eol=lf
+* text=auto
+*.py text eol=lf
+*.yml text eol=lf
+*.csv text eol=lf
