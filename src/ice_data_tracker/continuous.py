@@ -59,6 +59,11 @@ def _normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
     renamed.columns = [str(c).strip().replace('\ufeff', '') for c in renamed.columns]
     return renamed
 
+def _keep_monday_to_friday(df: pd.DataFrame, date_column: str = 'date') -> pd.DataFrame:
+    out = df.copy()
+    date_ts = pd.to_datetime(out[date_column], errors='coerce')
+    out = out.loc[date_ts.dt.weekday < 5].copy()
+    return out.reset_index(drop=True)
 
 def _parse_market_strip(market_strip: str) -> tuple[int, int]:
     value = str(market_strip).strip()
@@ -184,7 +189,10 @@ def _load_investing_seed(source_path: Path, instrument: ContinuousInstrument) ->
     out['market_strip'] = pd.NA
     out['last_trading_date'] = pd.NA
     out['splice_last_seed_date'] = instrument.splice_last_seed_date
+
     out = out.dropna(subset=['settlement_price']).drop_duplicates(subset=['date'], keep='first')
+    out = _keep_monday_to_friday(out, 'date')
+
     return out.sort_values('date').reset_index(drop=True)
 
 

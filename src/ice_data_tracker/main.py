@@ -178,6 +178,11 @@ def historical_payload_to_dataframe(payload: dict, instrument: Instrument, marke
                 "scraped_at_EET",
             ]
         )
+
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    df = df.loc[df["date"].dt.weekday < 5].copy()
+    df["date"] = df["date"].dt.strftime("%Y-%m-%d")
+
     return df.sort_values(["date"]).reset_index(drop=True)
 
 
