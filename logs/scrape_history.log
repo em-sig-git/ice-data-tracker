@@ -1196,3 +1196,9 @@
 2026-06-08 20:32:51,222 [INFO] Run finished: mode=historical
 2026-06-08 20:32:51,676 [INFO] Run started: mode=build_continuous
 2026-06-08 20:32:51,988 [INFO] Run finished: mode=build_continuous
+2026-06-09 03:52:58,048 [INFO] Run started: mode=historical
+2026-06-09 03:53:00,022 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=13 | rows=7189
+2026-06-09 03:53:02,093 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=15 | rows=8282
+2026-06-09 03:53:02,415 [INFO] Run finished: mode=historical
+2026-06-09 03:53:02,855 [INFO] Run started: mode=build_continuous
+2026-06-09 03:53:03,158 [INFO] Run finished: mode=build_continuous
