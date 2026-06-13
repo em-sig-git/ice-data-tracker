@@ -1644,3 +1644,9 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.
 2026-06-13 09:33:44,945 [INFO] Run finished: mode=historical
 2026-06-13 09:33:45,373 [INFO] Run started: mode=build_continuous
 2026-06-13 09:33:45,681 [INFO] Run finished: mode=build_continuous
+2026-06-13 19:53:58,904 [INFO] Run started: mode=historical
+2026-06-13 19:54:00,627 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=13 | rows=7233
+2026-06-13 19:54:02,385 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=15 | rows=8333
+2026-06-13 19:54:02,710 [INFO] Run finished: mode=historical
+2026-06-13 19:54:03,188 [INFO] Run started: mode=build_continuous
+2026-06-13 19:54:03,491 [INFO] Run finished: mode=build_continuous
