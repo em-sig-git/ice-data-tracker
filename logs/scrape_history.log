@@ -1274,3 +1274,373 @@
 2026-06-13 05:37:29,830 [INFO] Run finished: mode=historical
 2026-06-13 05:37:30,254 [INFO] Run started: mode=build_continuous
 2026-06-13 05:37:30,549 [INFO] Run finished: mode=build_continuous
+2026-06-13 09:33:44,230 [INFO] Run started: mode=historical
+2026-06-13 09:33:44,415 [ERROR] Historical scrape failed for brent_crude Jun26 (6018433): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018433&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018433&historicalSpan=3
+2026-06-13 09:33:44,423 [ERROR] Historical scrape failed for brent_crude Jul26 (6018430): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018430&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018430&historicalSpan=3
+2026-06-13 09:33:44,431 [ERROR] Historical scrape failed for brent_crude Aug26 (6018418): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018418&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018418&historicalSpan=3
+2026-06-13 09:33:44,439 [ERROR] Historical scrape failed for brent_crude Sep26 (6018448): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018448&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018448&historicalSpan=3
+2026-06-13 09:33:44,448 [ERROR] Historical scrape failed for brent_crude Oct26 (6018445): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018445&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018445&historicalSpan=3
+2026-06-13 09:33:44,456 [ERROR] Historical scrape failed for brent_crude Nov26 (6018442): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018442&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018442&historicalSpan=3
+2026-06-13 09:33:44,464 [ERROR] Historical scrape failed for brent_crude Dec26 (6018421): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018421&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018421&historicalSpan=3
+2026-06-13 09:33:44,472 [ERROR] Historical scrape failed for brent_crude Jan27 (6018427): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018427&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018427&historicalSpan=3
+2026-06-13 09:33:44,481 [ERROR] Historical scrape failed for brent_crude Feb27 (6018424): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018424&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018424&historicalSpan=3
+2026-06-13 09:33:44,489 [ERROR] Historical scrape failed for brent_crude Mar27 (6018436): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018436&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018436&historicalSpan=3
+2026-06-13 09:33:44,497 [ERROR] Historical scrape failed for brent_crude Apr27 (6018416): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018416&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018416&historicalSpan=3
+2026-06-13 09:33:44,505 [ERROR] Historical scrape failed for brent_crude May27 (6018440): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018440&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018440&historicalSpan=3
+2026-06-13 09:33:44,514 [ERROR] Historical scrape failed for brent_crude Jun27 (6018434): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018434&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6018434&historicalSpan=3
+2026-06-13 09:33:44,514 [WARNING] No historical data collected for brent_crude
+2026-06-13 09:33:44,523 [ERROR] Historical scrape failed for low_sulphur_gasoil Apr26 (6227601): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227601&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227601&historicalSpan=3
+2026-06-13 09:33:44,531 [ERROR] Historical scrape failed for low_sulphur_gasoil May26 (6227602): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227602&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227602&historicalSpan=3
+2026-06-13 09:33:44,539 [ERROR] Historical scrape failed for low_sulphur_gasoil Jun26 (6227603): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227603&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227603&historicalSpan=3
+2026-06-13 09:33:44,546 [ERROR] Historical scrape failed for low_sulphur_gasoil Jul26 (6227604): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227604&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227604&historicalSpan=3
+2026-06-13 09:33:44,554 [ERROR] Historical scrape failed for low_sulphur_gasoil Aug26 (6227605): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227605&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227605&historicalSpan=3
+2026-06-13 09:33:44,563 [ERROR] Historical scrape failed for low_sulphur_gasoil Sep26 (6227606): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227606&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227606&historicalSpan=3
+2026-06-13 09:33:44,570 [ERROR] Historical scrape failed for low_sulphur_gasoil Oct26 (6227607): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227607&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227607&historicalSpan=3
+2026-06-13 09:33:44,578 [ERROR] Historical scrape failed for low_sulphur_gasoil Nov26 (6227608): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227608&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227608&historicalSpan=3
+2026-06-13 09:33:44,586 [ERROR] Historical scrape failed for low_sulphur_gasoil Dec26 (6227609): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227609&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6227609&historicalSpan=3
+2026-06-13 09:33:44,594 [ERROR] Historical scrape failed for low_sulphur_gasoil Jan27 (6540998): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6540998&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6540998&historicalSpan=3
+2026-06-13 09:33:44,602 [ERROR] Historical scrape failed for low_sulphur_gasoil Feb27 (6540999): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6540999&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6540999&historicalSpan=3
+2026-06-13 09:33:44,610 [ERROR] Historical scrape failed for low_sulphur_gasoil Mar27 (6541000): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541000&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541000&historicalSpan=3
+2026-06-13 09:33:44,618 [ERROR] Historical scrape failed for low_sulphur_gasoil Apr27 (6541001): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541001&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541001&historicalSpan=3
+2026-06-13 09:33:44,626 [ERROR] Historical scrape failed for low_sulphur_gasoil May27 (6541002): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541002&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541002&historicalSpan=3
+2026-06-13 09:33:44,633 [ERROR] Historical scrape failed for low_sulphur_gasoil Jun27 (6541003): 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541003&historicalSpan=3
+Traceback (most recent call last):
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/main.py", line 207, in fetch_and_store_historical
+    payload = client.fetch_historical(market_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 30, in fetch_historical
+    payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ice-data-tracker/ice-data-tracker/src/ice_data_tracker/client.py", line 18, in _get_json
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.ice.com/marketdata/api/productguide/charting/data/historical?marketId=6541003&historicalSpan=3
+2026-06-13 09:33:44,634 [WARNING] No historical data collected for low_sulphur_gasoil
+2026-06-13 09:33:44,945 [INFO] Run finished: mode=historical
+2026-06-13 09:33:45,373 [INFO] Run started: mode=build_continuous
+2026-06-13 09:33:45,681 [INFO] Run finished: mode=build_continuous
