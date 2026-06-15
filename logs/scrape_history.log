@@ -1674,3 +1674,9 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.
 2026-06-15 12:39:12,114 [INFO] Fetching contract metadata for Low Sulphur Gasoil Futures
 2026-06-15 12:39:12,144 [INFO] Metadata updated: low_sulphur_gasoil_contracts.csv (15 rows)
 2026-06-15 12:39:12,145 [INFO] Run finished: mode=metadata
+2026-06-15 12:41:57,159 [INFO] Run started: mode=historical
+2026-06-15 12:41:58,579 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=13 | rows=7233
+2026-06-15 12:42:00,080 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=15 | rows=8333
+2026-06-15 12:42:00,388 [INFO] Run finished: mode=historical
+2026-06-15 12:42:00,812 [INFO] Run started: mode=build_continuous
+2026-06-15 12:42:01,119 [INFO] Run finished: mode=build_continuous
