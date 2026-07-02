@@ -11,10 +11,30 @@ from .config import HISTORICAL_SPAN, REQUEST_TIMEOUT, USER_AGENT, Instrument
 class IceClient:
     def __init__(self) -> None:
         self.session = requests.Session()
-        self.session.headers.update({"User-Agent": USER_AGENT, "Accept": "application/json"})
+        self.session.headers.update(
+            {
+                "User-Agent": USER_AGENT,
+                "Accept": "application/json, text/plain, */*",
+                "Accept-Language": "en-US,en;q=0.9",
+                "Referer": "https://www.ice.com/",
+                "Origin": "https://www.ice.com",
+                "Connection": "keep-alive",
+            }
+        )
 
     def _get_json(self, url: str, params: dict[str, Any] | None = None) -> Any:
         response = self.session.get(url, params=params, timeout=REQUEST_TIMEOUT)
+
+        if response.status_code >= 400:
+            logging.error(
+                "ICE request failed | status=%s | url=%s | content_type=%s | server=%s | body_start=%s",
+                response.status_code,
+                response.url,
+                response.headers.get("content-type"),
+                response.headers.get("server"),
+                response.text[:1000],
+            )
+
         response.raise_for_status()
         return response.json()
 
@@ -27,7 +47,13 @@ class IceClient:
 
     def fetch_historical(self, market_id: int) -> dict[str, Any]:
         url = "https://www.ice.com/marketdata/api/productguide/charting/data/historical"
-        payload = self._get_json(url, params={"marketId": market_id, "historicalSpan": HISTORICAL_SPAN})
+        payload = self._get_json(
+            url,
+            params={
+                "marketId": market_id,
+                "historicalSpan": HISTORICAL_SPAN,
+            },
+        )
         if not isinstance(payload, dict):
             raise ValueError(f"Unexpected historical payload for market {market_id}: {type(payload)!r}")
         return payload

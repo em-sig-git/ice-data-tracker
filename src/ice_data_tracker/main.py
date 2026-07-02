@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import argparse
 import logging
+import time
 from dataclasses import asdict
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Iterable
 
 import pandas as pd
+import requests
 
 from .client import IceClient
 from .config import (
@@ -18,6 +20,7 @@ from .config import (
     LOG_DIR,
     LOG_FILE,
     METADATA_DIR,
+    REQUEST_PAUSE_SECONDS,
     RIGA_TZ,
     SCHEDULE_STATE_FILE,
     STATE_DIR,
@@ -186,13 +189,40 @@ def historical_payload_to_dataframe(payload: dict, instrument: Instrument, marke
     return df.sort_values(["date"]).reset_index(drop=True)
 
 
-def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.DataFrame], now_riga: datetime) -> int:
-    success_count = 0
+def tracked_metadata_slugs(metadata_tables: dict[str, pd.DataFrame]) -> list[str]:
+    slugs: list[str] = []
+    for instrument in INSTRUMENTS:
+        metadata_df = metadata_tables.get(instrument.slug)
+        if metadata_df is not None and not metadata_df.empty:
+            slugs.append(instrument.slug)
+    return slugs
+
+
+def historical_refresh_is_complete(row_counts: dict[str, int], metadata_tables: dict[str, pd.DataFrame]) -> bool:
+    slugs = tracked_metadata_slugs(metadata_tables)
+    if not slugs:
+        return False
+    return all(row_counts.get(slug, 0) > 0 for slug in slugs)
+
+
+def historical_counts_text(row_counts: dict[str, int]) -> str:
+    return ", ".join(f"{slug}={row_counts.get(slug, 0)}" for slug in sorted(row_counts)) or "none"
+
+
+def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.DataFrame], now_riga: datetime) -> dict[str, int]:
+    """Fetch historical data and return incoming row counts by instrument slug.
+
+    The returned row counts are used as a gate before rebuilding continuous files.
+    If an ICE access-control block returns HTTP 403, the instrument loop stops early
+    instead of continuing to hammer the endpoint.
+    """
+    incoming_row_counts: dict[str, int] = {}
 
     for instrument in INSTRUMENTS:
         metadata_df = metadata_tables.get(instrument.slug)
         if metadata_df is None or metadata_df.empty:
             logging.warning("No tracked contracts for %s", instrument.slug)
+            incoming_row_counts[instrument.slug] = 0
             continue
 
         frames: list[pd.DataFrame] = []
@@ -219,6 +249,23 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
 
                 contract_success_count += 1
 
+            except requests.exceptions.HTTPError as exc:
+                status = exc.response.status_code if exc.response is not None else None
+                logging.exception(
+                    "Historical scrape failed for %s %s (%s): %s",
+                    instrument.slug,
+                    market_strip,
+                    market_id,
+                    exc,
+                )
+
+                if status == 403:
+                    logging.error(
+                        "Stopping %s historical scrape after HTTP 403. Likely ICE access-control/WAF block.",
+                        instrument.slug,
+                    )
+                    break
+
             except Exception as exc:
                 logging.exception(
                     "Historical scrape failed for %s %s (%s): %s",
@@ -228,11 +275,16 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
                     exc,
                 )
 
+            time.sleep(REQUEST_PAUSE_SECONDS)
+
         if not frames:
+            incoming_row_counts[instrument.slug] = 0
             logging.warning("No historical data collected for %s", instrument.slug)
             continue
 
         incoming_df = pd.concat(frames, ignore_index=True)
+        incoming_row_counts[instrument.slug] = len(incoming_df)
+
         path = history_csv_path(instrument)
         old_df = read_csv_if_exists(path, dtype={"market_id": "Int64"})
 
@@ -246,15 +298,14 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
         write_csv(final_df, path)
 
         logging.info(
-            "Historical updated: %s | contracts_ok=%s | rows=%s",
+            "Historical updated: %s | contracts_ok=%s | incoming_rows=%s | stored_rows=%s",
             path.name,
             contract_success_count,
+            len(incoming_df),
             len(final_df),
         )
 
-        success_count += contract_success_count
-
-    return success_count
+    return incoming_row_counts
 
 
 def load_or_refresh_metadata(client: IceClient, now_riga: datetime, force_refresh: bool) -> dict[str, pd.DataFrame]:
@@ -312,10 +363,17 @@ def run_scheduled() -> None:
     if due_historical_run(now_riga, state):
         if not metadata_tables:
             metadata_tables = load_or_refresh_metadata(client, now_riga, force_refresh=False)
-        historical_success_count = fetch_and_store_historical(client, metadata_tables, now_riga)
-        historical_run = historical_success_count > 0
+
+        row_counts = fetch_and_store_historical(client, metadata_tables, now_riga)
+        historical_run = historical_refresh_is_complete(row_counts, metadata_tables)
+
         if historical_run:
             build_and_store_continuous_series()
+        else:
+            logging.error(
+                "Continuous datasets were not rebuilt because historical refresh was incomplete: %s",
+                historical_counts_text(row_counts),
+            )
 
     if not metadata_run and not historical_run:
         logging.info("No scheduled scrape due at %s", now_riga.isoformat())
@@ -334,12 +392,22 @@ def run_manual(mode: str) -> None:
     metadata_tables = load_or_refresh_metadata(client, now_riga, force_refresh=(mode == "all"))
 
     if mode == "historical":
-        fetch_and_store_historical(client, metadata_tables, now_riga)
+        row_counts = fetch_and_store_historical(client, metadata_tables, now_riga)
+        if not historical_refresh_is_complete(row_counts, metadata_tables):
+            raise RuntimeError(
+                "Historical refresh incomplete; continuous datasets were not rebuilt. "
+                f"Incoming rows by instrument: {historical_counts_text(row_counts)}"
+            )
         build_and_store_continuous_series()
         return
 
     if mode == "all":
-        fetch_and_store_historical(client, metadata_tables, now_riga)
+        row_counts = fetch_and_store_historical(client, metadata_tables, now_riga)
+        if not historical_refresh_is_complete(row_counts, metadata_tables):
+            raise RuntimeError(
+                "Historical refresh incomplete; continuous datasets were not rebuilt. "
+                f"Incoming rows by instrument: {historical_counts_text(row_counts)}"
+            )
         build_and_store_continuous_series()
         return
 

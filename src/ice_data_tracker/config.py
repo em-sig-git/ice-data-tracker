@@ -18,8 +18,10 @@ SCHEDULE_STATE_FILE = STATE_DIR / "schedule_state.json"
 CSV_SEPARATOR = ";"
 CSV_DECIMAL = "."
 CSV_ENCODING = "utf-8-sig"
+
 USER_AGENT = "Mozilla/5.0 (compatible; ice-data-tracker/1.0; +https://github.com/em-sig-git/ice-data-tracker)"
 REQUEST_TIMEOUT = 60
+REQUEST_PAUSE_SECONDS = 0.75
 TRACKING_HORIZON_MONTHS = 12
 HISTORICAL_SPAN = 3
 

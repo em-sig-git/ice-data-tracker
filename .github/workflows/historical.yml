@@ -29,11 +29,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run historical scraper
+      - name: Run historical scraper and rebuild derived datasets
         run: PYTHONPATH=src python -m ice_data_tracker.main --mode historical
-
-      - name: Rebuild derived continuous datasets
-        run: PYTHONPATH=src python -m ice_data_tracker.main --mode build_continuous
 
       - name: Commit and push updates
         run: |
