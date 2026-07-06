@@ -2424,3 +2424,7 @@ requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.
 2026-07-06 11:02:03,865 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=14 | incoming_rows=7122 | stored_rows=7913
 2026-07-06 11:02:17,530 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=16 | incoming_rows=8110 | stored_rows=9031
 2026-07-06 11:02:17,857 [INFO] Run finished: mode=historical
+2026-07-06 20:13:56,718 [INFO] Run started: mode=historical
+2026-07-06 20:14:09,433 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=14 | incoming_rows=7122 | stored_rows=7913
+2026-07-06 20:14:23,835 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=16 | incoming_rows=8110 | stored_rows=9031
+2026-07-06 20:14:24,133 [INFO] Run finished: mode=historical
