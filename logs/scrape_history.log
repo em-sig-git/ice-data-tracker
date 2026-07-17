@@ -2632,3 +2632,7 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='www.ice.com', port=44
 2026-07-17 08:27:20,854 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=14 | incoming_rows=7109 | stored_rows=8012
 2026-07-17 08:27:35,334 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=16 | incoming_rows=8095 | stored_rows=9144
 2026-07-17 08:27:35,651 [INFO] Run finished: mode=historical
+2026-07-17 19:31:45,840 [INFO] Run started: mode=historical
+2026-07-17 19:31:58,522 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=14 | incoming_rows=7109 | stored_rows=8012
+2026-07-17 19:32:13,150 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=16 | incoming_rows=8095 | stored_rows=9144
+2026-07-17 19:32:13,378 [INFO] Run finished: mode=historical
