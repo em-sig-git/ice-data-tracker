@@ -532,9 +532,8 @@ def main() -> None:
         else:
             run_manual(args.mode)
     except BaseException as exc:
-        # Write the reason into scrape_history.log before exiting. Without this
-        # the traceback only reaches stderr, so the committed log ends mid-run
-        # with no explanation of why the run failed.
+        # Record a clear failure summary before re-raising. The logging handlers send
+        # it to both the local log file and the GitHub Actions execution log.
         logging.critical(
             "Run FAILED: mode=%s | %s: %s", args.mode, type(exc).__name__, exc, exc_info=True
         )

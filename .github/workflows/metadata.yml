@@ -2,8 +2,8 @@ name: ICE metadata scrape
 
 on:
   schedule:
-    - cron: '13 7 1,15 * *'
-      timezone: 'Europe/Riga'
+    - cron: "13 7 1,15 * *"
+      timezone: "Europe/Riga"
   workflow_dispatch:
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -35,20 +35,20 @@ jobs:
         continue-on-error: true
         run: PYTHONPATH=src python -m ice_data_tracker.main --mode metadata
 
-      # Runs even when the scraper failed, so the log explaining WHY it failed
-      # is committed instead of being discarded with the runner.
+      # Runs even when the scraper failed so any valid data changes are committed.
+      # Failure details remain available in the GitHub Actions execution log.
       - name: Commit and push updates
         if: always()
         run: |
-          if git diff --quiet -- data logs; then
-            echo "No changes to commit"
+          if git diff --quiet -- data; then
+            echo "No data changes to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data logs
+          git add data
           if [ "${{ steps.scrape.outcome }}" = "failure" ]; then
-            git commit -m "Update ICE logs (metadata scrape failed)"
+            git commit -m "Update ICE data (metadata scrape failed)"
           else
             git commit -m "Update ICE metadata"
           fi
