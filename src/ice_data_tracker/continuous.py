@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 
 from .config import DERIVED_DIR, HISTORICAL_DIR, METADATA_DIR, SOURCE_DIR
 from .expiry import compute_last_trading_date
-from .storage import read_csv_if_exists, write_csv
+from .storage import frames_have_same_values, read_csv_if_exists, write_csv
 
 
 @dataclass(frozen=True)
@@ -189,9 +189,21 @@ def build_and_store_continuous_series() -> dict[str, pd.DataFrame]:
     else:
         combined = pd.DataFrame()
 
+    # Only move last_update_timestamp when the data behind it changed. Stamping
+    # it unconditionally rewrote all ~13,700 rows on every run, so the file
+    # always looked 100% modified and the workflow's "nothing to commit" check
+    # could never fire.
+    combined_path = DERIVED_DIR / 'energy_futures_continuous_daily.csv'
+    previous = read_csv_if_exists(combined_path)
     timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    if not previous.empty and 'last_update_timestamp' in previous.columns:
+        previous_data = previous.drop(columns=['last_update_timestamp'])
+        if frames_have_same_values(previous_data, combined):
+            timestamp = str(previous['last_update_timestamp'].iloc[0])
+
     combined['last_update_timestamp'] = timestamp
 
-    write_csv(combined, DERIVED_DIR / 'energy_futures_continuous_daily.csv')
+    write_csv(combined, combined_path)
     outputs['combined'] = combined
     return outputs
