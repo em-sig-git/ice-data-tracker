@@ -2,7 +2,7 @@ name: ICE metadata scrape
 
 on:
   schedule:
-    - cron: '13 9 1,15 * *'
+    - cron: '13 7 1,15 * *'
       timezone: 'Europe/Riga'
   workflow_dispatch:
 
