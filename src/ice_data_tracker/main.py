@@ -3,16 +3,16 @@ from __future__ import annotations
 import argparse
 import logging
 import time
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Iterable
 
 import pandas as pd
-import requests
 
-from .client import IceClient
+from .client import IceClient, IceHttpError
 from .config import (
     DATA_DIR,
+    EXPIRY_GRACE_BUSINESS_DAYS,
     HISTORICAL_DIR,
     DERIVED_DIR,
     INSTRUMENTS,
@@ -20,12 +20,14 @@ from .config import (
     LOG_FILE,
     METADATA_DIR,
     REQUEST_PAUSE_SECONDS,
+    RETRY_ATTEMPTS,
     RIGA_TZ,
     SCHEDULE_STATE_FILE,
     STATE_DIR,
     TRACKING_HORIZON_MONTHS,
     Instrument,
 )
+from .expiry import compute_last_trading_date, is_contract_active, scrape_until_date
 from .storage import load_json, read_csv_if_exists, save_json, upsert_by_columns, write_csv
 from .continuous import build_and_store_continuous_series
 
@@ -208,14 +210,56 @@ def historical_counts_text(row_counts: dict[str, int]) -> str:
     return ", ".join(f"{slug}={row_counts.get(slug, 0)}" for slug in sorted(row_counts)) or "none"
 
 
+
+def split_active_contracts(
+    metadata_df: pd.DataFrame,
+    instrument: Instrument,
+    today: date,
+) -> tuple[list[dict], list[dict]]:
+    """Split a metadata table into contracts still worth scraping, and expired ones.
+
+    Expired contracts are NOT deleted: their metadata row stays in the CSV and
+    every settlement price already collected stays in the historical file, so
+    the continuous series can still roll through them. They are simply no
+    longer requested from ICE, which is both pointless (the price will never
+    change again) and a growing source of failures as ICE retires the market.
+    """
+    active: list[dict] = []
+    expired: list[dict] = []
+    for row in metadata_df.to_dict(orient="records"):
+        market_strip = str(row["market_strip"])
+        try:
+            still_active = is_contract_active(
+                market_strip,
+                instrument.roll_rule,
+                today,
+                EXPIRY_GRACE_BUSINESS_DAYS,
+            )
+        except ValueError as exc:
+            # An unparseable strip should not silently drop a contract.
+            logging.warning(
+                "Could not determine expiry for %s %s (%s); scraping it anyway",
+                instrument.slug,
+                market_strip,
+                exc,
+            )
+            still_active = True
+        (active if still_active else expired).append(row)
+    return active, expired
+
+
 def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.DataFrame], now_riga: datetime) -> dict[str, int]:
     """Fetch historical data and return incoming row counts by instrument slug.
 
-    The returned row counts are used as a gate before rebuilding continuous files.
-    If an ICE access-control block returns HTTP 403, the instrument loop stops early
-    instead of continuing to hammer the endpoint.
+    The returned row counts are used as a gate before rebuilding continuous
+    files. Expired contracts are skipped entirely (their data is kept). Each
+    request is retried with exponential backoff inside the client; reaching the
+    handler here means every retry was exhausted. If that final failure is an
+    HTTP 403, the instrument loop stops early rather than hammering a Cloudflare
+    block that has already refused us four times.
     """
     incoming_row_counts: dict[str, int] = {}
+    today = now_riga.date()
 
     for instrument in INSTRUMENTS:
         metadata_df = metadata_tables.get(instrument.slug)
@@ -224,16 +268,48 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
             incoming_row_counts[instrument.slug] = 0
             continue
 
+        active_rows, expired_rows = split_active_contracts(metadata_df, instrument, today)
+
+        if expired_rows:
+            logging.info(
+                "Skipping %s expired %s contract(s) (data retained): %s",
+                len(expired_rows),
+                instrument.slug,
+                ", ".join(
+                    f"{r['market_strip']} (LTD {compute_last_trading_date(str(r['market_strip']), instrument.roll_rule).date()})"
+                    for r in expired_rows
+                ),
+            )
+
+        if not active_rows:
+            logging.warning(
+                "All %s contracts are expired; nothing to scrape. Metadata refresh needed.",
+                instrument.slug,
+            )
+            incoming_row_counts[instrument.slug] = 0
+            continue
+
+        logging.info(
+            "Scraping %s: %s active contract(s), %s expired and skipped",
+            instrument.slug,
+            len(active_rows),
+            len(expired_rows),
+        )
+
+        # Establish Cloudflare cookies from a real page before touching the API.
+        client.warm_up(instrument.product_url)
+
         frames: list[pd.DataFrame] = []
         contract_success_count = 0
+        contract_failure_count = 0
 
-        for row in metadata_df.to_dict(orient="records"):
+        for row in active_rows:
             market_id = int(row["market_id"])
             market_strip = str(row["market_strip"])
             end_date_utc = str(row["end_date_utc"])
 
             try:
-                payload = client.fetch_historical(market_id)
+                payload = client.fetch_historical(market_id, referer=instrument.product_url)
                 new_df = historical_payload_to_dataframe(
                     payload=payload,
                     instrument=instrument,
@@ -248,24 +324,27 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
 
                 contract_success_count += 1
 
-            except requests.exceptions.HTTPError as exc:
-                status = exc.response.status_code if exc.response is not None else None
-                logging.exception(
-                    "Historical scrape failed for %s %s (%s): %s",
+            except IceHttpError as exc:
+                contract_failure_count += 1
+                logging.error(
+                    "Historical scrape failed for %s %s (%s) after all retries: %s",
                     instrument.slug,
                     market_strip,
                     market_id,
                     exc,
                 )
 
-                if status == 403:
+                if exc.status_code == 403:
                     logging.error(
-                        "Stopping %s historical scrape after HTTP 403. Likely ICE access-control/WAF block.",
+                        "Stopping %s historical scrape: Cloudflare returned 403 on every "
+                        "attempt across %s browser profile(s).",
                         instrument.slug,
+                        RETRY_ATTEMPTS,
                     )
                     break
 
             except Exception as exc:
+                contract_failure_count += 1
                 logging.exception(
                     "Historical scrape failed for %s %s (%s): %s",
                     instrument.slug,
@@ -297,9 +376,11 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
         write_csv(final_df, path)
 
         logging.info(
-            "Historical updated: %s | contracts_ok=%s | incoming_rows=%s | stored_rows=%s",
+            "Historical updated: %s | contracts_ok=%s | contracts_failed=%s | skipped_expired=%s | incoming_rows=%s | stored_rows=%s",
             path.name,
             contract_success_count,
+            contract_failure_count,
+            len(expired_rows),
             len(incoming_df),
             len(final_df),
         )
@@ -433,10 +514,21 @@ def main() -> None:
     setup_logging()
     args = parse_args()
     logging.info("Run started: mode=%s", args.mode)
-    if args.mode == "scheduled":
-        run_scheduled()
-    else:
-        run_manual(args.mode)
+    try:
+        if args.mode == "scheduled":
+            run_scheduled()
+        else:
+            run_manual(args.mode)
+    except BaseException as exc:
+        # Write the reason into scrape_history.log before exiting. Without this
+        # the traceback only reaches stderr, so the committed log ends mid-run
+        # with no explanation of why the run failed.
+        logging.critical(
+            "Run FAILED: mode=%s | %s: %s", args.mode, type(exc).__name__, exc, exc_info=True
+        )
+        logging.info("Run finished (failed): mode=%s", args.mode)
+        logging.shutdown()
+        raise
     logging.info("Run finished: mode=%s", args.mode)
 
 

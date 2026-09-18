@@ -1,4 +1,7 @@
 pandas>=2.2.2
-requests>=2.31.0
-
 holidays>=0.48
+
+# www.ice.com is behind Cloudflare, which scores the TLS/HTTP2 fingerprint of
+# the connection, not just the User-Agent header. curl_cffi impersonates a real
+# browser fingerprint; plain `requests` is reliably answered with HTTP 403.
+curl_cffi>=0.7.0
