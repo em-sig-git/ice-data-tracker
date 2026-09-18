@@ -19,11 +19,30 @@ CSV_SEPARATOR = ";"
 CSV_DECIMAL = "."
 CSV_ENCODING = "utf-8-sig"
 
-USER_AGENT = "Mozilla/5.0 (compatible; ice-data-tracker/1.0; +https://github.com/em-sig-git/ice-data-tracker)"
 REQUEST_TIMEOUT = 60
 REQUEST_PAUSE_SECONDS = 0.75
 TRACKING_HORIZON_MONTHS = 12
 HISTORICAL_SPAN = 3
+
+# --- Cloudflare / anti-bot -------------------------------------------------
+# Browser profiles curl_cffi impersonates. The client rotates to the next one
+# after a 403, because repeating a session Cloudflare has already scored as a
+# bot just produces another 403. "chrome" tracks the newest Chrome that the
+# installed curl_cffi knows about.
+IMPERSONATE_PROFILES: tuple[str, ...] = ("chrome", "chrome136", "safari184", "firefox144")
+
+# --- Retries ---------------------------------------------------------------
+RETRY_ATTEMPTS = 4                  # 1 initial attempt + 3 retries
+RETRY_BACKOFF_BASE_SECONDS = 4.0    # 4s, 8s, 16s (plus up to 25% jitter)
+RETRY_BACKOFF_MAX_SECONDS = 60.0
+RETRYABLE_STATUS_CODES = frozenset({403, 408, 429, 500, 502, 503, 504})
+
+# --- Contract expiry -------------------------------------------------------
+# A contract stops being requested this many business days after its last
+# trading date. The grace period covers corrected final settlement prices,
+# which ICE can publish a day or two after trading ceases. Data already
+# collected for an expired contract is always kept.
+EXPIRY_GRACE_BUSINESS_DAYS = 5
 
 
 @dataclass(frozen=True)
@@ -33,6 +52,7 @@ class Instrument:
     product_id: int
     hub_id: int
     product_url: str
+    roll_rule: str  # see expiry.py: "brent" or "gasoil"
 
     @property
     def metadata_url(self) -> str:
@@ -49,6 +69,7 @@ INSTRUMENTS: tuple[Instrument, ...] = (
         product_id=254,
         hub_id=403,
         product_url="https://www.ice.com/products/219/Brent-Crude-Futures/data",
+        roll_rule="brent",
     ),
     Instrument(
         slug="low_sulphur_gasoil",
@@ -56,5 +77,6 @@ INSTRUMENTS: tuple[Instrument, ...] = (
         product_id=5817,
         hub_id=9373,
         product_url="https://www.ice.com/products/34361119/Low-Sulphur-Gasoil-Futures/data",
+        roll_rule="gasoil",
     ),
 )

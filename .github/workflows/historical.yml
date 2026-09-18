@@ -12,6 +12,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -30,9 +31,14 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run historical scraper and rebuild derived datasets
+        id: scrape
+        continue-on-error: true
         run: PYTHONPATH=src python -m ice_data_tracker.main --mode historical
 
+      # Runs even when the scraper failed, so the log explaining WHY it failed
+      # is committed instead of being discarded with the runner.
       - name: Commit and push updates
+        if: always()
         run: |
           if git diff --quiet -- data logs; then
             echo "No changes to commit"
@@ -41,5 +47,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data logs
-          git commit -m "Update ICE historical and derived data"
+          if [ "${{ steps.scrape.outcome }}" = "failure" ]; then
+            git commit -m "Update ICE logs (historical scrape failed)"
+          else
+            git commit -m "Update ICE historical and derived data"
+          fi
+          # The other workflow may have pushed while this job was running
+          # (the two crons are only 2 minutes apart on the 1st and 15th).
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
           git push
+
+      - name: Report scrape failure
+        if: steps.scrape.outcome == 'failure'
+        run: |
+          echo "::error::ICE historical scrape failed - see logs/scrape_history.log in the commit above."
+          exit 1

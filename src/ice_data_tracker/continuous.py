@@ -1,21 +1,15 @@
 from __future__ import annotations
 
-import calendar
 from dataclasses import dataclass
 from pathlib import Path
 
-import holidays
 import pandas as pd
 
 from datetime import datetime, timezone
 
 from .config import DERIVED_DIR, HISTORICAL_DIR, METADATA_DIR, SOURCE_DIR
+from .expiry import compute_last_trading_date
 from .storage import read_csv_if_exists, write_csv
-
-MONTH_MAP = {
-    'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
-    'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12,
-}
 
 
 @dataclass(frozen=True)
@@ -64,95 +58,6 @@ def _keep_monday_to_friday(df: pd.DataFrame, date_column: str = 'date') -> pd.Da
     date_ts = pd.to_datetime(out[date_column], errors='coerce')
     out = out.loc[date_ts.dt.weekday < 5].copy()
     return out.reset_index(drop=True)
-
-def _parse_market_strip(market_strip: str) -> tuple[int, int]:
-    value = str(market_strip).strip()
-    month_txt = value[:3].title()
-    year_txt = value[3:]
-    if month_txt not in MONTH_MAP:
-        raise ValueError(f'Unsupported market_strip month: {market_strip}')
-    year = 2000 + int(year_txt)
-    month = MONTH_MAP[month_txt]
-    return year, month
-
-
-UK_HOLIDAYS_BY_YEAR: dict[int, set[pd.Timestamp]] = {}
-
-
-def _uk_holidays_for_year(year: int) -> set[pd.Timestamp]:
-    cached = UK_HOLIDAYS_BY_YEAR.get(year)
-    if cached is not None:
-        return cached
-    holiday_set = {pd.Timestamp(day).normalize() for day in holidays.country_holidays('GB', years=[year]).keys()}
-    UK_HOLIDAYS_BY_YEAR[year] = holiday_set
-    return holiday_set
-
-
-def _is_business_day(ts: pd.Timestamp) -> bool:
-    normalized = ts.normalize()
-    return normalized.weekday() < 5 and normalized not in _uk_holidays_for_year(normalized.year)
-
-
-def _previous_business_day(ts: pd.Timestamp) -> pd.Timestamp:
-    out = ts - pd.Timedelta(days=1)
-    while not _is_business_day(out):
-        out -= pd.Timedelta(days=1)
-    return out
-
-
-def _last_business_day_of_month(year: int, month: int) -> pd.Timestamp:
-    last_day = calendar.monthrange(year, month)[1]
-    ts = pd.Timestamp(year=year, month=month, day=last_day)
-    while not _is_business_day(ts):
-        ts -= pd.Timedelta(days=1)
-    return ts
-
-
-def _business_days_before(ts: pd.Timestamp, n: int) -> pd.Timestamp:
-    out = ts
-    for _ in range(n):
-        out = _previous_business_day(out)
-    return out
-
-
-def _business_day_before_fixed_holiday(ts: pd.Timestamp, month: int, day: int) -> pd.Timestamp:
-    holiday = pd.Timestamp(year=ts.year, month=month, day=day)
-    before = holiday - pd.Timedelta(days=1)
-    while not _is_business_day(before):
-        before -= pd.Timedelta(days=1)
-    return before
-
-
-def _gasoil_last_trading_date(contract_year: int, contract_month: int) -> pd.Timestamp:
-    anchor = pd.Timestamp(year=contract_year, month=contract_month, day=14)
-    return _business_days_before(anchor, 2)
-
-
-def _brent_last_trading_date(contract_year: int, contract_month: int) -> pd.Timestamp:
-    preceding_year = contract_year
-    preceding_month = contract_month - 2
-    if preceding_month <= 0:
-        preceding_month += 12
-        preceding_year -= 1
-
-    ltd = _last_business_day_of_month(preceding_year, preceding_month)
-    christmas_eve_business_day = _business_day_before_fixed_holiday(ltd, 12, 25)
-    new_years_eve_business_day = _business_day_before_fixed_holiday(ltd, 1, 1)
-
-    if ltd == christmas_eve_business_day or ltd == new_years_eve_business_day:
-        ltd = _previous_business_day(ltd)
-
-    return ltd
-
-
-def _compute_last_trading_date(market_strip: str, roll_rule: str) -> pd.Timestamp:
-    year, month = _parse_market_strip(market_strip)
-    if roll_rule == 'gasoil':
-        return _gasoil_last_trading_date(year, month)
-    if roll_rule == 'brent':
-        return _brent_last_trading_date(year, month)
-    raise ValueError(f'Unsupported roll_rule: {roll_rule}')
-
 
 def _load_investing_seed(source_path: Path, instrument: ContinuousInstrument) -> pd.DataFrame:
     if not source_path.exists():
@@ -203,7 +108,7 @@ def _load_metadata(metadata_path: Path, instrument: ContinuousInstrument) -> pd.
     df = _normalize_columns(df)
     df = df[['market_id', 'market_strip']].drop_duplicates().copy()
     df['last_trading_date'] = df['market_strip'].apply(
-        lambda x: _compute_last_trading_date(str(x), instrument.roll_rule).strftime('%Y-%m-%d')
+        lambda x: compute_last_trading_date(str(x), instrument.roll_rule).strftime('%Y-%m-%d')
     )
     return df.sort_values(['last_trading_date', 'market_id']).reset_index(drop=True)
 
