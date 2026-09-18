@@ -3380,3 +3380,13 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='www.ice.com', port=44
 2026-09-18 05:28:37,635 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=16 | incoming_rows=7956 | stored_rows=9536
 2026-09-18 05:28:53,624 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=18 | incoming_rows=8914 | stored_rows=10730
 2026-09-18 05:28:53,867 [INFO] Run finished: mode=historical
+2026-09-18 06:47:39,286 [INFO] Run started: mode=historical
+2026-09-18 06:47:39,376 [INFO] Skipping 5 expired brent_crude contract(s) (data retained): Jun26 (LTD 2026-04-30), Jul26 (LTD 2026-05-29), Aug26 (LTD 2026-06-30), Sep26 (LTD 2026-07-31), Oct26 (LTD 2026-08-28)
+2026-09-18 06:47:39,376 [INFO] Scraping brent_crude: 11 active contract(s), 5 expired and skipped
+2026-09-18 06:47:39,503 [INFO] Warm-up https://www.ice.com/products/219/Brent-Crude-Futures/data | status=200 | profile=chrome | cookies=2
+2026-09-18 06:47:49,294 [INFO] Historical updated: brent_crude_historical.csv | contracts_ok=11 | contracts_failed=0 | skipped_expired=5 | incoming_rows=5665 | stored_rows=9536
+2026-09-18 06:47:49,298 [INFO] Skipping 6 expired low_sulphur_gasoil contract(s) (data retained): Apr26 (LTD 2026-04-10), May26 (LTD 2026-05-12), Jun26 (LTD 2026-06-11), Jul26 (LTD 2026-07-10), Aug26 (LTD 2026-08-12), Sep26 (LTD 2026-09-10)
+2026-09-18 06:47:49,298 [INFO] Scraping low_sulphur_gasoil: 12 active contract(s), 6 expired and skipped
+2026-09-18 06:47:49,397 [INFO] Warm-up https://www.ice.com/products/34361119/Low-Sulphur-Gasoil-Futures/data | status=200 | profile=chrome | cookies=3
+2026-09-18 06:47:59,969 [INFO] Historical updated: low_sulphur_gasoil_historical.csv | contracts_ok=12 | contracts_failed=0 | skipped_expired=6 | incoming_rows=6180 | stored_rows=10730
+2026-09-18 06:48:00,226 [INFO] Run finished: mode=historical
