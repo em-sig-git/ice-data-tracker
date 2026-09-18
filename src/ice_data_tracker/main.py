@@ -28,7 +28,14 @@ from .config import (
     Instrument,
 )
 from .expiry import compute_last_trading_date, is_contract_active, scrape_until_date
-from .storage import load_json, read_csv_if_exists, save_json, upsert_by_columns, write_csv
+from .storage import (
+    load_json,
+    read_csv_if_exists,
+    save_json,
+    upsert_by_columns,
+    upsert_keeping_timestamps,
+    write_csv,
+)
 from .continuous import build_and_store_continuous_series
 
 
@@ -366,11 +373,16 @@ def fetch_and_store_historical(client: IceClient, metadata_tables: dict[str, pd.
         path = history_csv_path(instrument)
         old_df = read_csv_if_exists(path, dtype={"market_id": "Int64"})
 
-        final_df = upsert_by_columns(
+        # Incoming data always wins; only scraped_at_EET is carried over from the
+        # stored row when nothing about that row actually changed. Otherwise the
+        # twice-daily re-fetch of each contract's full three-year span rewrote
+        # the timestamp on every row and produced a whole-file diff every run.
+        final_df = upsert_keeping_timestamps(
             existing=old_df,
             incoming=incoming_df,
             key_columns=["date", "market_id"],
             sort_columns=["date", "end_date_utc", "market_id"],
+            timestamp_column="scraped_at_EET",
         )
 
         write_csv(final_df, path)
